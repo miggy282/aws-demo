@@ -28,6 +28,7 @@ Resources:
       ContainerDefinitions:
         - Name: website-service
           Essential: true
+          Memory: 512
           Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo:hmrc
           Environment:
             - Name: PRODUCT_SERVICE_URL
