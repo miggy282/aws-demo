@@ -1,0 +1,73 @@
+version: 0.2
+
+env:
+  variables:
+      shell: bash
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  #secrets-manager:
+     # key: secret-id:json-key:version-stage:version-id
+     # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+#batch:
+  #fast-fail: true
+  #build-list:
+  #build-matrix:
+  #build-graph:
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    #runtime-versions:
+      # name: version
+      # name: version
+    commands:
+        - yum install docker, golang -y 
+        - export GOROOT=/home/ec2-user/go-15
+        - export PATH=$PATH:$GOROOT/bin
+        - export GOPATH=/home/ec2-user/
+        - export PATH=$GOPATH/bin:$PATH
+        - export GOBIN=/home/ec2-user/go-15bin/
+
+  #pre_build:
+    #commands:
+      # - command
+      # - command
+  build:
+    commands:
+        - cd ${CODEBUILD_SRC_DIR}/services/backend/src
+        - docker run --rm  -v "${GOPATH}":/gopath -v "$(pwd)":/app -e "GOPATH=/gopath" -w /app golang:1.7 sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o app'
+        - docker build -t ${name}-backend:${version} .
+        - docker tag ${name}-backend:latest ${registry}/${name}-backend:${version}
+        - docker push ${registry}/${name}-backend:${version} 
+        - cd ${CODEBUILD_SRC_DIR}/services/frontend/src
+        - docker run --rm  -v "${GOPATH}":/gopath -v "$(pwd)":/app -e "GOPATH=/gopath" -w /app golang:1.7 sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o app'
+        - docker build -t ${name}-frontend:${version} .
+        - docker tag ${name}-frontend:latest ${registry}/${name}-frontend:${version}
+        - docker push ${registry}/${name}-frontend:${version} 
+  #post_build:
+    #commands:
+      # - command
+      # - command
+#reports:
+  #report-name-or-arn:
+    #files:
+      # - location
+      # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+#artifacts:
+  #files:
+    # - location
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+  #paths:
+    # - paths

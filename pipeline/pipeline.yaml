@@ -155,7 +155,7 @@ Resources:
             Capabilities: CAPABILITY_NAMED_IAM
             RoleArn: !GetAtt CloudformationRole.Arn
             StackName: DemoInfraProductServices
-            TemplatePath: !Sub "SourceCode::../infra-cf/productservices.yaml"
+            TemplatePath: !Sub "SourceCode::../infra-cf/backendservices.yaml"
           RunOrder: 1   
       - Name: DeployWebServices
         Actions:
@@ -172,7 +172,7 @@ Resources:
             Capabilities: CAPABILITY_NAMED_IAM
             RoleArn: !GetAtt CloudformationRole.Arn
             StackName: DemoInfraProductServices
-            TemplatePath: !Sub "SourceCode::../infra-cf/productservices.yaml"
+            TemplatePath: !Sub "SourceCode::../infra-cf/frontendservices.yaml"
           RunOrder: 1      
     
      

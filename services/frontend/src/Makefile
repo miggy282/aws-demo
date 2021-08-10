@@ -9,12 +9,12 @@ all: run
 # $ make publish version=1.0.0
 
 name = aws-demo
-registry = public.ecr.aws/u0o2r8c0
-version ?= latest
+registry = 599385682019.dkr.ecr.eu-west-1.amazonaws.com
+version ?= hmrc
 
 binary:
 	$(call blue, "Building Linux binary ready for containerisation...")
-	docker run --rm -it -v "${GOPATH}":/gopath -v "$(CURDIR)":/app -e "GOPATH=/gopath" -w /app golang:1.7 sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o app'
+	docker run --rm -it -v "${GOPATH}":/gopath -v "$(CURDIR)":/app -e "GOPATH=/gopath" -w /app golang:latest sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o app'
 
 image: binary
 	$(call blue, "Building docker image...")
