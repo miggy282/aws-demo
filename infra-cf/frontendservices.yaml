@@ -21,19 +21,6 @@ Parameters:
 
 
 Resources:
-  Service:
-    Type: AWS::ECS::Service
-    DependsOn: ListenerRule
-    Properties:
-      Cluster: !ImportValue DemoInfraECS
-      Role: !Ref ServiceRole
-      DesiredCount: !Ref DesiredCount
-      TaskDefinition: !Ref TaskDefinition
-      LoadBalancers:
-        - ContainerName: "website-service"
-          ContainerPort: 8000
-          TargetGroupArn: !Ref TargetGroup
-
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
@@ -52,6 +39,19 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: ListenerRule
+    Properties:
+      Cluster: !ImportValue DemoInfraECS
+      Role: !Ref ServiceRole
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      LoadBalancers:
+        - ContainerName: "website-service"
+          ContainerPort: 8000
+          TargetGroupArn: !Ref TargetGroup
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
@@ -76,7 +76,7 @@ Resources:
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      ListenerArn: !ImportValue DemoInfraLBlister
+      ListenerArn: !ImportValue DemoInfraLB
       Priority: 1
       Conditions:
         - Field: path-pattern
