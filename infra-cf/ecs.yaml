@@ -303,4 +303,10 @@ Outputs:
     Value: !Ref ECSRole
     Export:
       Name: DemoInfraECSRole
+      
+  ECSRoleArn:
+  Description: A reference to ECS AutoScaling Group Name
+  Value: !GetAtt  ECSRole.Arn
+  Export:
+    Name: ECSRoleArn
  
