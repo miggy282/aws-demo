@@ -28,7 +28,7 @@ Resources:
       ContainerDefinitions:
         - Name: website-service
           Essential: true
-          Memory: 512
+          Memory: 128
           Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo:hmrc
           Environment:
             - Name: PRODUCT_SERVICE_URL
@@ -139,7 +139,7 @@ Resources:
         - - service
           - !ImportValue DemoInfraECS
           - !GetAtt Service.Name
-      RoleARN: !ImportValue DemoInfraECSRole
+      RoleARN: !ImportValue DemoInfraECSAsg
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
 
