@@ -29,7 +29,7 @@ Resources:
         - Name: website-service
           Essential: true
           Memory: 128
-          Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo/hmrc:latest
+          Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo/ofgem:latest
           Environment:
             - Name: PRODUCT_SERVICE_URL
               Value: !Join ["/", [!ImportValue DemoInfraLBUrl, "products"]]
