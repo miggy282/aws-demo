@@ -29,7 +29,7 @@ Resources:
         - Name: website-service
           Essential: true
           Memory: 128
-          Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo:sha256:544a82911dd83c6976873607782593f2d2817a8435efae6e4b520c3e7eca0b69
+          Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/hmrc:sha256:544a82911dd83c6976873607782593f2d2817a8435efae6e4b520c3e7eca0b69
             - Name: PRODUCT_SERVICE_URL
               Value: !Join ["/", [!ImportValue DemoInfraLBUrl, "products"]]
           PortMappings:
