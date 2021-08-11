@@ -29,7 +29,8 @@ Resources:
         - Name: website-service
           Essential: true
           Memory: 128
-          Image: 599385682019.dkr.ecr.eu-west-1.amazonaws.com/aws-demo/hmrc:latest
+          DesiredCount: 2
+          Image: 275396840892.dkr.ecr.us-east-1.amazonaws.com/ecs-refarch-cloudformation/website-service:1.0.0
             - Name: PRODUCT_SERVICE_URL
               Value: !Join ["/", [!ImportValue DemoInfraLBUrl, "products"]]
           PortMappings:
